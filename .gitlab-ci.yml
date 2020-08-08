@@ -1,3 +1,5 @@
+image: markhobson/maven-chrome:jdk-11
+
 stages:
   - build
   - test
