@@ -64,7 +64,7 @@ public class DriverFactory {
             instance.driver.set(new ChromeDriver(options));
         }
         else if(browserName.equalsIgnoreCase("firefox")){
-            DesiredCapabilities dc = new DesiredCapabilities();
+            //DesiredCapabilities dc = new DesiredCapabilities();
             FirefoxDriverManager.firefoxdriver().setup();
             FirefoxOptions options = new FirefoxOptions();
             options.setHeadless(true);
