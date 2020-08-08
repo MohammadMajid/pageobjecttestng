@@ -20,11 +20,8 @@ build:
     - mvn compile
 
 smoke:
-  stage1: smoke check
+  stage: smoke check
   script:
     - mvn test -Dsuite=smoke -Denvironment=qa
-
-  stage2: regression check
-  script1:
     - mvn test -Dsuite=regression -Denvironment=qa
 
