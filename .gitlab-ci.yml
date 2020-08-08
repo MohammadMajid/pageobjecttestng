@@ -1,4 +1,4 @@
-image: rgielen/selenium-firefox-maven
+image: markhobson/maven-firefox:jdk-11
 
 
 stages:
