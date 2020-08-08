@@ -6,6 +6,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -65,8 +66,11 @@ public class DriverFactory {
         }
         else if(browserName.equalsIgnoreCase("firefox")){
             //DesiredCapabilities dc = new DesiredCapabilities();
+            FirefoxBinary firefoxBinary = new FirefoxBinary();
+            firefoxBinary.addCommandLineOptions("--headless");
             FirefoxDriverManager.firefoxdriver().setup();
             FirefoxOptions options = new FirefoxOptions();
+            options.setBinary(firefoxBinary);
             options.setHeadless(true);
             instance.driver.set(new FirefoxDriver(options));
         }
