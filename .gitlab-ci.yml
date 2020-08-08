@@ -1,4 +1,4 @@
-image: markhobson/maven-chrome:jdk-11
+image: markhobson/maven-firefox
 
 stages:
   - build
@@ -18,19 +18,11 @@ build:
     - mvn compile
 
 smokesuite:
-  image: markhobson/maven-chrome:jdk-11
   stage: test
   script:
     - mvn test -Dsuite=smoke -Denvironment=qa
 
 regressionsuite:
-  image: markhobson/maven-chrome:jdk-11
   stage: test
   script:
     - mvn test -Dsuite=regression -Denvironment=stage
-
-fullsuite:
-  image: markhobson/maven-chrome:jdk-11
-  stage: test
-  script:
-    - mvn test -Dsuite=full -Denvironment=stage
