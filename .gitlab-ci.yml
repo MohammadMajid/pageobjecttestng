@@ -1,4 +1,4 @@
-image: markhobson/maven-firefox:jdk-8
+image: markhobson/maven-firefox
 
 stages:
   - build
