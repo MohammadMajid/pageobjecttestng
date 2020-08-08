@@ -1,28 +1,26 @@
 image: markhobson/maven-firefox
+pipelines:
+  branches:
+    master:
+      - step:
+          name: "Build"
+          caches:
+            - maven
+          script:
+            - mvn clean
+          artifacts:
+            - build/**
 
-stages:
-  - build
-  - test
-
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-
-cache:
-  paths:
-    - .m2/repository/
-    - target/
-
-build:
-  stage: build
-  script:
-    - mvn compile
-
-smokesuite:
-  stage: test
-  script:
-    - mvn test -Dsuite=smoke -Denvironment=qa
-
-regressionsuite:
-  stage: test
-  script:
-    - mvn test -Dsuite=regression -Denvironment=stage
+      - parallel:
+          - step:
+              name: "Smoke Suite"
+              caches:
+                - maven
+              script:
+                - mvn clean test -Dsuite=smoke -Denvironment=qa
+          - step:
+              name: "Regression Suite"
+              caches:
+                - maven
+              script:
+                - mvn clean test -Dsuite=regression -Denvironment=qa
