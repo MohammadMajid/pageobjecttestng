@@ -1,9 +1,9 @@
 image: markhobson/maven-firefox
+image1: markhobson/maven-chrome:jdk-11
 
 stages:
   - build
   - smoke check
-  - regression check
 
 
 variables:
@@ -20,11 +20,11 @@ build:
     - mvn compile
 
 smoke:
-  stage: smoke check
+  stage1: smoke check
   script:
     - mvn test -Dsuite=smoke -Denvironment=qa
 
-regression:
-  stage: regression check
-  script:
+  stage2: regression check
+  script1:
     - mvn test -Dsuite=regression -Denvironment=qa
+
