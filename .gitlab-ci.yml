@@ -1,8 +1,6 @@
-image: markhobson/maven-firefox
-
 stages:
   - build
-  - smoke check
+  - test
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
@@ -17,13 +15,20 @@ build:
   script:
     - mvn compile
 
-smoketest:
-  stage: smoke check
+smokesuite:
+  image: markhobson/maven-chrome:jdk-11
+  stage: test
   script:
     - mvn test -Dsuite=smoke -Denvironment=qa
 
-regressiontest:
-  stage: smoke check
+regressionsuite:
+  image: markhobson/maven-chrome:jdk-11
+  stage: test
   script:
-    - mvn test -Dsuite=regression -Denvironment=qa
+    - mvn test -Dsuite=regression -Denvironment=stage
 
+fullsuite:
+  image: markhobson/maven-chrome:jdk-11
+  stage: test
+  script:
+    - mvn test -Dsuite=full -Denvironment=stage
