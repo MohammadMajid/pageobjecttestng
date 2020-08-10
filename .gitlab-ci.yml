@@ -34,19 +34,14 @@ smokesuite:
   artifacts:
     when: always
     paths:
-      - "target/surefire-reports/*"
-      - "*/target/surefire-reports/*"
-      - "*/*/target/surefire-reports/*"
       - "src/test/resources/test-output/*"
 
 regressionsuite:
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa
-  allow_failure: false
+  allow_failure: true
   artifacts:
     when: always
     paths:
-      - "target/surefire-reports/*"
-      - "*/target/surefire-reports/*"
-      - "*/*/target/surefire-reports/*"
+      - "src/test/resources/test-output/*"
