@@ -31,8 +31,8 @@ smokesuite:
   artifacts:
     when: always
     paths:
-      - "*/*/target/surefire-reports/*"
-      - "src/test/resources/test-output/*"
+      - target/surefire-reports
+      - src/test/resources/PageScreenShots
 
 regressionsuite:
   stage: test
@@ -42,5 +42,5 @@ regressionsuite:
   artifacts:
     when: always
     paths:
-      - "*/*/target/surefire-reports/*"
-      - "src/test/resources/test-output/*"
+      - target/surefire-reports/*
+      - src/test/resources/PageScreenShots
