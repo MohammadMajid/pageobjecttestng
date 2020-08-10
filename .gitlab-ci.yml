@@ -31,7 +31,7 @@ smokesuite:
   artifacts:
     when: always
     paths:
-      - target/surefire-reports
+      - target/surefire-reports/index.html
       - src/test/resources/PageScreenShots
 
 regressionsuite:
@@ -42,5 +42,5 @@ regressionsuite:
   artifacts:
     when: always
     paths:
-      - target/surefire-reports/*
+      - target/surefire-reports/index.html
       - src/test/resources/PageScreenShots
