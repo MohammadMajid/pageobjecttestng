@@ -1,26 +1,48 @@
-image: markhobson/maven-firefox
-pipelines:
-  branches:
-    master:
-      - step:
-          name: "Build"
-          caches:
-            - maven
-          script:
-            - mvn clean
-          artifacts:
-            - build/**
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
 
-      - parallel:
-          - step:
-              name: "Smoke Suite"
-              caches:
-                - maven
-              script:
-                - mvn clean test -Dsuite=smoke -Denvironment=qa
-          - step:
-              name: "Regression Suite"
-              caches:
-                - maven
-              script:
-                - mvn clean test -Dsuite=regression -Denvironment=qa
+image: markhobson/maven-chrome:jdk-11
+
+stages:
+  - build
+  - smoke check
+  - regression check
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+build:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+  artifacts:
+    paths:
+      - build/
+
+smoke:
+  stage: smoke check
+  script:
+    - mvn $MAVEN_CLI_OPTS test -Dsuite=smoke -Denvironment=qa
+  allow_failure: false
+  artifacts:
+    when: always
+    paths:
+      - "target/surefire-reports/*"
+      - "*/target/surefire-reports/*"
+      - "*/*/target/surefire-reports/*"
+      - "src/test/resources/test-output/*"
+
+regression:
+  stage: regression check
+  script:
+    - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa
+  allow_failure: false
+  artifacts:
+    when: always
+    paths:
+      - "target/surefire-reports/*"
+      - "*/target/surefire-reports/*"
+      - "*/*/target/surefire-reports/*"
