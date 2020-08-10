@@ -7,7 +7,7 @@ variables:
   # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
 
-image: markhobson/maven-firefox
+image: markhobson/maven-chrome
 
 stages:
   - build
@@ -34,6 +34,7 @@ smokesuite:
   artifacts:
     when: always
     paths:
+      - "*/*/target/surefire-reports/*"
       - "src/test/resources/test-output/*"
 
 regressionsuite:
@@ -44,4 +45,5 @@ regressionsuite:
   artifacts:
     when: always
     paths:
+      - "*/*/target/surefire-reports/*"
       - "src/test/resources/test-output/*"
