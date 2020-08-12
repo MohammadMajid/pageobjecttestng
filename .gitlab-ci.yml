@@ -24,6 +24,8 @@ build:
     - mvn $MAVEN_CLI_OPTS compile
 
 smokesuite:
+  only:
+    - master
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=smoke -Denvironment=qa
@@ -35,6 +37,8 @@ smokesuite:
       - src/test/resources/PageScreenShots
 
 regressionsuite:
+  only:
+    - master
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa

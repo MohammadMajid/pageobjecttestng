@@ -5,7 +5,7 @@
 
     <test name = "Smoke Test">
         <parameter name="browserName" value="chrome"/>
-        <parameter name="env" value="stage"/>
+        <parameter name="env" value="qa"/>
         <groups>
             <run>
                 <include name = "smoke"></include>
