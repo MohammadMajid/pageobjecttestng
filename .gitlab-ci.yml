@@ -7,7 +7,7 @@ variables:
   # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
 
-image: atlassianlabs/docker-node-jdk-chrome-firefox
+image: markhobson/maven-chrome
 
 stages:
   - build
@@ -31,10 +31,10 @@ smokesuite:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=smoke -Denvironment=qa
   allow_failure: false
   artifacts:
-    when: always
-    paths:
-      - target/surefire-reports/index.html
-      - src/test/resources/PageScreenShots
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+        
 
 regressionsuite:
   only:
@@ -44,7 +44,7 @@ regressionsuite:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa
   allow_failure: true
   artifacts:
-    when: always
-    paths:
-      - target/surefire-reports/index.html
-      - src/test/resources/PageScreenShots
+    reports:
+      junit:
+        - target/surefire-reports/index.html
+        - src/test/resources/PageScreenShots
