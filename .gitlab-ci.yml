@@ -31,6 +31,8 @@ smokesuite:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=smoke -Denvironment=qa
   allow_failure: false
   artifacts:
+    paths:
+       - target/surefire-reports/TEST-*.xml
     reports:
       junit:
         - target/surefire-reports/TEST-*.xml
@@ -44,7 +46,8 @@ regressionsuite:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa
   allow_failure: true
   artifacts:
+    paths:
+       - target/surefire-reports/TEST-*.xml
     reports:
       junit:
-        - target/surefire-reports/index.html
-        - src/test/resources/PageScreenShots
+        - target/surefire-reports/TEST-*.xml
