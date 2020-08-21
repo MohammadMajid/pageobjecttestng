@@ -4,7 +4,7 @@
 <suite name="Smoke Test Suite" verbose="1" parallel="classes" thread-count="2">
 
     <test name = "Smoke Test">
-        <parameter name="browserName" value="grid_chrome_16"/>
+        <parameter name="browserName" value="chrome"/>
         <parameter name="env" value="qa"/>
         <groups>
             <run>

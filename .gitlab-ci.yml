@@ -7,7 +7,7 @@ variables:
   # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
 
-image: maven:latest
+image: markhobson/maven-chrome
 
 stages:
   - build
@@ -27,9 +27,6 @@ smokesuite:
   only:
     - master
   stage: test
-  services:
-    - hub
-    - chrome
   script:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=smoke -Denvironment=qa
   allow_failure: false
@@ -45,9 +42,6 @@ regressionsuite:
   only:
     - master
   stage: test
-  services:
-    - hub
-    - chrome
   script:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa
   allow_failure: true
@@ -57,15 +51,3 @@ regressionsuite:
     reports:
       junit:
         - target/surefire-reports/TEST-*.xml
-
-definitions:
-  services:
-    hub:
-      image: selenium/hub
-      environment:
-        BROWSER: chrome
-    chrome:
-      image: selenium/node-chrome:3.141.5
-      environment:
-        HUB_PORT_4444_TCP_ADDR: 127.0.0.1
-        HUB_PORT_4444_TCP_PORT: "4444"
