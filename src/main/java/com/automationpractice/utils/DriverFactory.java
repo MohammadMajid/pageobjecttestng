@@ -36,7 +36,7 @@ public class DriverFactory {
     public static final String USERNAME = "";
     public static final String AUTOMATE_KEY = "";
     public static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
-    public static final String LOCAL_GRID_URL = "http://localhost:4444/wd/hub";
+    public static final String LOCAL_GRID_URL = "http://127.0.0.1:4444/wd/hub";
 
     private DriverFactory() {
         //Do-nothing..Do not allow to initialize this class from outside
@@ -110,11 +110,13 @@ public class DriverFactory {
                 e.printStackTrace();
             }
         }else if(browserName.equalsIgnoreCase("grid_chrome_16")){
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.setPlatform(Platform.ANY);
-            caps.setBrowserName("chrome");
+            //DesiredCapabilities caps = new DesiredCapabilities();
+            //caps.setPlatform(Platform.ANY);
+            //caps.setBrowserName("chrome");
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
             try {
-                instance.driver.set(new RemoteWebDriver(new URL(LOCAL_GRID_URL), caps));
+                instance.driver.set(new RemoteWebDriver(new URL(LOCAL_GRID_URL), options));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
