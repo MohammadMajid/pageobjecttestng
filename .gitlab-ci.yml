@@ -39,8 +39,8 @@ smokesuite:
         
 
 regressionsuite:
-  only:
-    - master
+  #only:
+    #- master
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa
