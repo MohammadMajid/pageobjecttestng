@@ -39,6 +39,7 @@ smokesuite:
         
 
 regressionsuite:
+  [skip ci]
   only:
     - master
   stage: test
