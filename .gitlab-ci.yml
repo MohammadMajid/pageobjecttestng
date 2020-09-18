@@ -44,7 +44,7 @@ regressionsuite:
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa
-  allow_failure: true
+  allow_failure: false
   artifacts:
     paths:
        - target/surefire-reports/TEST-*.xml
