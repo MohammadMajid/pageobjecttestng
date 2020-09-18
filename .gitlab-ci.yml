@@ -7,6 +7,8 @@ variables:
   # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
   MAVEN_CHROME_IMAGE: "markhobson/maven-chrome:jdk-11"
+  SMOKE_SUITE: "-Dsuite=smoke"
+  REGRESSION_SUITE: "-Dsuite=regression"
 
 image: $MAVEN_CHROME_IMAGE
 
@@ -29,7 +31,7 @@ smokesuite:
     - master
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS test -Dsuite=smoke -Denvironment=qa
+    - mvn $MAVEN_CLI_OPTS test $SMOKE_SUITE -Denvironment=qa
   allow_failure: false
   artifacts:
     paths:
@@ -44,7 +46,7 @@ regressionsuite:
     #- master
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa
+    - mvn $MAVEN_CLI_OPTS test $REGRESSION_SUITE -Denvironment=qa
   allow_failure: false
   artifacts:
     paths:
