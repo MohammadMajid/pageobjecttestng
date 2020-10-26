@@ -6,8 +6,11 @@ variables:
   # when running from the command line.
   # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  MAVEN_CHROME_IMAGE: "markhobson/maven-chrome:jdk-11"
+  SMOKE_SUITE: "-Dsuite=smoke"
+  REGRESSION_SUITE: "-Dsuite=regression"
 
-image: markhobson/maven-chrome:jdk-11
+image: $MAVEN_CHROME_IMAGE
 
 stages:
   - build
@@ -46,7 +49,7 @@ regressionsuite:
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS -Dsuite=regression "-Duid=d1@grr.la" "-Dpwd=d1@grr.la1" clean test
-  allow_failure: true
+  allow_failure: false
   artifacts:
     paths:
        - target/surefire-reports/TEST-*.xml
