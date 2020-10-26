@@ -28,7 +28,9 @@ smokesuite:
     - master
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS test -Dsuite=smoke -Denvironment=qa
+    - echo $uid
+    - echo $pwd
+    - mvn $MAVEN_CLI_OPTS -Dsuite=smoke "-Duid=d1@grr.la" "-Dpwd=d1@grr.la1" clean test
   allow_failure: false
   artifacts:
     paths:
@@ -43,7 +45,7 @@ regressionsuite:
     #- master
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS test -Dsuite=regression -Denvironment=qa
+    - mvn $MAVEN_CLI_OPTS -Dsuite=regression "-Duid=d1@grr.la" "-Dpwd=d1@grr.la1" clean test
   allow_failure: true
   artifacts:
     paths:

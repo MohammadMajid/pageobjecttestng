@@ -41,7 +41,9 @@ public class LoginPage extends PageBase {
         PageFactory.initElements(driver,this);
     }
 
-    public void signInWithCredentials(String email, String password) {
+    public void signInWithCredentials() {
+        String email = System.getProperty("uid");
+        String password = System.getProperty("pwd");
         highlight(emailField);
         emailField.sendKeys(email);
         highlight(passwordField);

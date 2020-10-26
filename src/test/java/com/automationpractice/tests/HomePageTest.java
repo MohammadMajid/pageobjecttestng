@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 public class HomePageTest extends ScriptBaseTestNG {
 
-    @Test(groups = {"smoke","regression"})
+    //@Test(groups = {"smoke","regression"})
     public void navigateToLoginPage(){
         //test = extent.createTest("navigateToLoginPage", "PASSED test case");
         homePage.verifyPageLogo();
