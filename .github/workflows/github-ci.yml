@@ -16,6 +16,8 @@ jobs:
         image: selenium/standalone-chrome:102.0.5005.115-chromedriver-102.0.5005.61-grid-4.41.0-20260222
         ports:
           - 4444:4444
+        env:
+          SELENIUM_URL: http://selenium:4444/wd/hub
         options: >
           --health-cmd "curl -f http://localhost:4444/status || exit 1"
           --health-interval 10s
@@ -46,6 +48,8 @@ jobs:
         image: selenium/standalone-chrome:102.0.5005.115-chromedriver-102.0.5005.61-grid-4.41.0-20260222
         ports:
           - 4444:4444
+        env:
+          SELENIUM_URL: http://selenium:4444/wd/hub
         options: >
           --health-cmd "curl -f http://localhost:4444/status || exit 1"
           --health-interval 10s

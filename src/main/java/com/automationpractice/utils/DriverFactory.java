@@ -36,7 +36,7 @@ public class DriverFactory {
     public static final String USERNAME = "";
     public static final String AUTOMATE_KEY = "";
     public static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
-    public static final String LOCAL_GRID_URL = "http://localhost:4444/wd/hub";
+    public static final String LOCAL_GRID_URL = System.getenv("SELENIUM_URL") != null ? System.getenv("SELENIUM_URL") : "http://localhost:4444/wd/hub";
 
     private final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
@@ -145,25 +145,27 @@ public class DriverFactory {
     }
 
     private WebDriver createGridDriver(BrowserType type) {
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setPlatform(Platform.ANY);
-
-        switch (type) {
-            case GRID_CHROME:
-                caps.setBrowserName("chrome");
-                break;
-            case GRID_FIREFOX:
-                caps.setBrowserName("firefox");
-                break;
-            case GRID_IE:
-                caps.setBrowserName("internet explorer");
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported grid type: " + type);
-        }
-
         try {
-            return new RemoteWebDriver(new URL(LOCAL_GRID_URL), caps);
+            URL gridUrl = new URL(LOCAL_GRID_URL);
+
+            switch (type) {
+                case GRID_CHROME: {
+                    ChromeOptions options = new ChromeOptions();
+                    options.addArguments("--disable-gpu", "--window-size=1920,1080", "--no-sandbox");
+                    return new RemoteWebDriver(gridUrl, options);
+                }
+                case GRID_FIREFOX: {
+                    FirefoxOptions options = new FirefoxOptions();
+                    options.addArguments("-width=1920", "-height=1080");
+                    return new RemoteWebDriver(gridUrl, options);
+                }
+                case GRID_IE:
+                    DesiredCapabilities ieCaps = new DesiredCapabilities();
+                    ieCaps.setBrowserName("internet explorer");
+                    return new RemoteWebDriver(gridUrl, ieCaps);
+                default:
+                    throw new IllegalArgumentException("Unsupported grid type: " + type);
+            }
         } catch (MalformedURLException e) {
             throw new RuntimeException("Malformed grid URL: " + LOCAL_GRID_URL, e);
         }
