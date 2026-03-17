@@ -1,7 +1,7 @@
 package com.automationpractice.utils;
 
 import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import java.io.File;
@@ -19,17 +19,17 @@ public class ExtentManager {
         new File(directory).mkdir();
         String path = directory + fineName;
 
-        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(path);
-        //htmlReporter = new ExtentHtmlReporter("./reports/extent.html");
-        htmlReporter.config().setTheme(Theme.STANDARD);
-        htmlReporter.config().setDocumentTitle("Automation Reports");
-        htmlReporter.config().setEncoding("utf-8");
-        htmlReporter.config().setReportName("Automation Test Results");
+        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(path);
+        //sparkReporter = new ExtentSparkReporter("./reports/extent.html");
+        sparkReporter.config().setTheme(Theme.STANDARD);
+        sparkReporter.config().setDocumentTitle("Automation Reports");
+        sparkReporter.config().setEncoding("utf-8");
+        sparkReporter.config().setReportName("Automation Test Results");
 
         extent = new ExtentReports();
         extent.setSystemInfo("Automation Tester", "Mohammad Majid");
         extent.setSystemInfo("Organization", "MMAJID");
-        extent.attachReporter(htmlReporter);
+        extent.attachReporter(sparkReporter);
         return extent;
     }
 

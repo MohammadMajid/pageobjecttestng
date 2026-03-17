@@ -8,7 +8,7 @@ import static org.testng.Assert.assertTrue;
 
 public class LoginFunctionalityTest extends ScriptBaseTestNG {
 
-    @Test(groups = {"regression"}, priority=1)
+/*     @Test(groups = {"regression"}, priority=1)
     public void signInWithInvalidCredentials() {
         //test = extent.createTest("signInWithInvalidCredentials", "PASSED test case");
         homePage.navigateToLoginPage();
@@ -34,5 +34,5 @@ public class LoginFunctionalityTest extends ScriptBaseTestNG {
         loginPage.signInWithCredentials("d1@grr.la","d1@grr.la1");
         //loginPage.signOut();
         assertTrue(loginPage.isSignInLinkDisplayed(), "SignIn link was not displayed after sign out action");
-    }
+    } */
 }

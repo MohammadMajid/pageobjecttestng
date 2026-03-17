@@ -40,21 +40,17 @@ public class ExtentListeners implements ITestListener {
 
     public void onTestFailure(ITestResult result) {
 
-        String methodName= result.getMethod().getMethodName();
-        String excepionMessage= Arrays.toString(result.getThrowable().getStackTrace());
-        extentTest.get().fail("<details>" + "<summary>" + "<b>" + "<font color=" + "red>" +
-                "Exception Occured:Click to see details:"
-                + "</font>" + "</b >" + "</summary>" +
-                excepionMessage.replaceAll(",", "<br>")+"</details>"+" \n");
+        String methodName = result.getMethod().getMethodName();
+        String excepionMessage = Arrays.toString(result.getThrowable().getStackTrace());
+        extentTest.get().fail("<details><summary><b><font color='red'>" +
+                "Exception Occurred: Click to see details:" +
+                "</font></b></summary>" +
+                excepionMessage.replaceAll(",", "<br>") + "</details>\n");
 
         WebDriver driver = DriverFactory.getInstance().getDriver();
-        String path = takeScreenshot(driver,methodName);
-        try {
-            extentTest.get().fail("<b><font color=red>" + "Screenshot of failure" + "</front></b>",
-                    MediaEntityBuilder.createScreenCaptureFromBase64String(path).build());
-        }catch (IOException e){
-            extentTest.get().fail("Test Failed, cannot attach screenshot");
-        }
+        String path = takeScreenshot(driver, methodName);
+        extentTest.get().fail("<b><font color=red>" + "Screenshot of failure" + "</font></b>",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(path).build());
 
         String failureLogg = "<b>Test Method : " + methodName.toUpperCase() + "-> Failed</b>";
         Markup m = MarkupHelper.createLabel(failureLogg, ExtentColor.RED);

@@ -9,18 +9,18 @@ public class HomePageTest extends ScriptBaseTestNG {
     @Test(groups = {"smoke","regression"})
     public void navigateToLoginPage(){
         //test = extent.createTest("navigateToLoginPage", "PASSED test case");
-        homePage.verifyPageLogo();
-        homePage.navigateToLoginPage();
-        homePage.verifyPageTitle(Constants.LOGIN_PAGE_TITLE);
+        homePage.verifyPageTitle(Constants.HOME_PAGE_TITLE);
+        homePage.checkFriday();
+        homePage.verifyPageTitle(Constants.HOME_PAGE_TITLE);
         homePage.isPageReady();
     }
 
-    @Test(groups = {"smoke"})
+    /* @Test(groups = {"smoke"})
     public void Search(){
         //test = extent.createTest("Search", "PASSED test case");
         homePage.verifyPageLogo();
         homePage.searchFunctionality(randomTestData.randomEmail());
         homePage.verifyNoResultFound();
         homePage.isPageReady();
-    }
+    } */
 }

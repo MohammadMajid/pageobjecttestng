@@ -6,6 +6,6 @@ public class Constants {
     //******************************Constants Name**************************
 
     public static final String LOGIN_PAGE_TITLE = "Login - My Store";
-    public static final String HOME_PAGE_TITLE = "My Store";
+    public static final String HOME_PAGE_TITLE = "Automation Testing Practice";
     public static final String CONTACTS_PAGE_TITLE = "Contact us - My Store";
 }

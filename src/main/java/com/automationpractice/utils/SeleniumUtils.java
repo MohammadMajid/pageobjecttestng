@@ -5,7 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 /**
  * Created by Mohammad Majid on 6/17/2017.
@@ -46,11 +46,11 @@ public class SeleniumUtils {
 
     public WebElement waitForElementDisplayed(final By locator, int timeToWaitInSec) {
 
-        driver.manage().timeouts().implicitlyWait(100, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(100));
 
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(timeToWaitInSec, TimeUnit.SECONDS)
-                .pollingEvery(100, TimeUnit.MILLISECONDS)
+                .withTimeout(Duration.ofSeconds(timeToWaitInSec))
+                .pollingEvery(Duration.ofMillis(100))
                 .ignoring(NoSuchElementException.class);
 
         WebElement foo = wait.until(new Function<WebDriver, WebElement>() {
@@ -63,7 +63,7 @@ public class SeleniumUtils {
             }
         });
 
-        driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT_TIME,TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(DEFAULT_WAIT_TIME));
         return foo;
     }
 }

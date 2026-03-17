@@ -9,6 +9,7 @@ import org.testng.Assert;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Properties;
 
 
@@ -27,7 +28,7 @@ public class PageBase extends WebElementUtils{
 
     public boolean isPageReady() {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMEOUT));
             wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
         } catch (WebDriverException e) {
             return false;

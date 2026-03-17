@@ -2,11 +2,11 @@ package com.automationpractice.utils;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.xmlbeans.impl.piccolo.io.FileFormatException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,12 +28,12 @@ public class ExcelReader {
             FileInputStream fileStream = new FileInputStream(file);
             if (FilenameUtils.getExtension(fileName).equals("xlsx")) {
                 workbook = new XSSFWorkbook(fileStream);
-            } else if(FilenameUtils.getExtension(fileName).equals("xls")) {
+            } else if (FilenameUtils.getExtension(fileName).equals("xls")) {
                 workbook = new HSSFWorkbook(fileStream);
-            }else{
-                throw new FileFormatException("This type of file format is not currently supported!");
+            } else {
+                throw new InvalidFormatException("This type of file format is not currently supported!");
             }
-        } catch (IOException e) {
+        } catch (IOException | InvalidFormatException e) {
             e.printStackTrace();
         }
     }
@@ -255,7 +255,7 @@ public class ExcelReader {
     private Object getData(Cell cell) {
         Object result = null;
         if (cell != null) {
-            switch (cell.getCellTypeEnum()) {
+            switch (cell.getCellType()) {
                 case NUMERIC:
                     result = "" + cell.getNumericCellValue();
                     break;
@@ -268,7 +268,7 @@ public class ExcelReader {
                 default: {
                     System.out.println("******************************************************************");
                     System.out.println("Cell [" + cell.getRowIndex() + "," + cell.getColumnIndex() + "]");
-                    System.out.println("Cell Type: " + cell.getCellTypeEnum());
+                    System.out.println("Cell Type: " + cell.getCellType());
                     System.out.println("Cell Type is not supported");
                     System.out.println("Using default as BLANK");
                     System.out.println("******************************************************************");

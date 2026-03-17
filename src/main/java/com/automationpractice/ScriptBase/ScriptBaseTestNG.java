@@ -12,8 +12,8 @@ import org.testng.annotations.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class ScriptBaseTestNG {
 
@@ -43,12 +43,11 @@ public class ScriptBaseTestNG {
     //chrome,chromeHeadless,firefox,ie,grid_chrome_16,grid_firefox_16,grid_ie_16
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browserName", "env"})
-    public void beforeMethod(@Optional(value = ("firefox")) String browserName, @Optional(value = ("qa")) String env) throws InterruptedException, IOException {
+    public void beforeMethod(@Optional(value = ("chrome")) String browserName, @Optional(value = ("qa")) String env) throws InterruptedException, IOException {
 
         driver = DriverFactory.getInstance(browserName).getDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(10,TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         driver.manage().deleteAllCookies();
 
         pageBase = new PageBase();
