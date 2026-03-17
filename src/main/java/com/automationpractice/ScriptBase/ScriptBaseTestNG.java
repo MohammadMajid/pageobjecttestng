@@ -45,6 +45,18 @@ public class ScriptBaseTestNG {
     @Parameters({"browserName", "env"})
     public void beforeMethod(@Optional(value = ("chrome")) String browserName, @Optional(value = ("qa")) String env) throws InterruptedException, IOException {
 
+        // On CI (GitHub Actions), use the Selenium standalone-grid service container
+        // instead of local ChromeDriver binary inside the container.
+        if (System.getenv("GITHUB_ACTIONS") != null || System.getenv("CI") != null) {
+            if (browserName == null || browserName.isBlank()) {
+                browserName = "grid_chrome";
+            } else if (browserName.equalsIgnoreCase("chrome")) {
+                browserName = "grid_chrome";
+            } else if (browserName.equalsIgnoreCase("firefox")) {
+                browserName = "grid_firefox";
+            }
+        }
+
         driver = DriverFactory.getInstance(browserName).getDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
