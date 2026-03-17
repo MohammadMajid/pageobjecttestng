@@ -2,15 +2,25 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ '*']
   pull_request:
-    branches: [ main, master ]
+    branches: [ '*']
 
 jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: markhobson/maven-chrome:3.8.6-jdk-8
+      image: maven:3.9.0-jdk-8
+    services:
+      selenium:
+        image: selenium/standalone-chrome:4.41.0-20260310
+        ports:
+          - 4444:4444
+        options: >
+          --health-cmd "curl -f http://localhost:4444/status || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,11 +37,20 @@ jobs:
         run: mvn --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true compile
 
   smokesuite:
-    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     container:
-      image: markhobson/maven-chrome:3.8.6-jdk-8
+      image: maven:3.9.0-jdk-8
     needs: build
+    services:
+      selenium:
+        image: selenium/standalone-chrome:4.41.0-20260310
+        ports:
+          - 4444:4444
+        options: >
+          --health-cmd "curl -f http://localhost:4444/status || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -49,10 +68,9 @@ jobs:
             src/test/resources/PageScreenShots
 
   regressionsuite:
-    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     container:
-      image: markhobson/maven-chrome:3.8.6-jdk-8
+      image: maven:3.9.0-jdk-8
     needs: build
     steps:
       - name: Checkout code
