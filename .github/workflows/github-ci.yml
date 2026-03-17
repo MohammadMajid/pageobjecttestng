@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: maven:3.9.4-openjdk-17
+      image: maven:3-eclipse-temurin-17
     services:
       selenium:
         image: selenium/standalone-chrome:4.41.0-20260310
@@ -39,7 +39,7 @@ jobs:
   smokesuite:
     runs-on: ubuntu-latest
     container:
-      image: maven:3.9.4-openjdk-17
+      image: maven:3-eclipse-temurin-17
     needs: build
     services:
       selenium:
@@ -70,7 +70,7 @@ jobs:
   regressionsuite:
     runs-on: ubuntu-latest
     container:
-      image: maven:3.9.4-openjdk-17
+      image: maven:3-eclipse-temurin-17
     needs: build
     steps:
       - name: Checkout code
