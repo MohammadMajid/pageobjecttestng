@@ -13,7 +13,7 @@ jobs:
       image: maven:3-eclipse-temurin-17
     services:
       selenium:
-        image: selenium/standalone-chrome:4.41.0-20260310
+        image: selenium/standalone-chrome:102.0.5005.115-chromedriver-102.0.5005.61-grid-4.41.0-20260222
         ports:
           - 4444:4444
         options: >
@@ -43,7 +43,7 @@ jobs:
     needs: build
     services:
       selenium:
-        image: selenium/standalone-chrome:4.41.0-20260310
+        image: selenium/standalone-chrome:102.0.5005.115-chromedriver-102.0.5005.61-grid-4.41.0-20260222
         ports:
           - 4444:4444
         options: >
